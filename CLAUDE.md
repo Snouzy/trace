@@ -6,6 +6,10 @@ Trace is a minimal and **very light** screen annotation app for macOS, inspired 
 
 The first priority is **lightness** (RAM, CPU, binary size) and **simple code**. Each addition must be justified. When in doubt, do not add.
 
+## Keep this file current
+
+After each change to the project, update this file in the same change when the change makes a part of it false or incomplete: architecture, shortcuts, constraints, current state, out of scope. Do the same for `README.md` when the change is visible to a user. Do not touch this file when the change has no effect on what it says.
+
 ## Technical constraints (not negotiable)
 
 - **Swift + AppKit only.** No SwiftUI, no dependencies, no Swift Package, no Xcode project.
@@ -20,7 +24,7 @@ The first priority is **lightness** (RAM, CPU, binary size) and **simple code**.
 ## Current architecture
 
 - `Settings`: global state (tool, colour, highlighter colour, width, fade mode, palette).
-- `Settings.keys`: the key of each tool and of the fade toggle, stored as characters in `UserDefaults`; refuses duplicates and reserved keys (1 to 5, [ ]).
+- `Settings.keys`: the key of each tool, of the delete-selection action and of the fade toggle, stored as characters in `UserDefaults`; refuses duplicates and reserved keys (1 to 5, [ ]).
 - `Shortcut`: the global shortcut (physical key code + Carbon modifier mask), read from and written to `UserDefaults`, with a label computed from the active keyboard layout.
 - `Mark`: one annotation (tool, colour, width, points, text, end date, angle).
 - `Canvas` (NSView): holds the `Mark` values, draws with `NSBezierPath` in `draw(_:)`, handles mouse, keyboard, text field, fade timer and shortcut feedback label.
@@ -44,7 +48,8 @@ The first priority is **lightness** (RAM, CPU, binary size) and **simple code**.
 | --- | --- |
 | ⌃⌥A (global, can be changed in Settings) | Show / hide the overlay. The default is the physical position of A on QWERTY: on AZERTY it is the key labelled Q |
 | V / T / H / A / L / R / O / E (can be changed in Settings) | Select / freehand ("tracé") / highlighter / arrow / line / rectangle / circle / text |
-| Select tool: click, drag, Delete | Selects a mark, moves it, deletes it. A selected mark is not removed by the fade |
+| Select tool: click, drag | Selects a mark, moves it. A selected mark is not removed by the fade |
+| Select tool: Q (can be changed in Settings), Delete, or the trash knob next to the ↻ knob | Deletes the selected mark. Q does nothing without a selection |
 | Select tool: handles | Resize: end points (line, arrow), corners (rectangle, circle, freehand stroke), font size (text). Shift keeps a square or a circle |
 | Select tool: Shift while moving | The move stays on one axis, horizontal or vertical |
 | Select tool: arrow | One bend point at the middle of each segment: a drag curves the arrow and adds a point; a double-click on a point removes it |
@@ -61,7 +66,7 @@ The first priority is **lightness** (RAM, CPU, binary size) and **simple code**.
 
 ## Current state
 
-The code **compiles with zero warnings** and the app starts (about 13 MB at rest, 200 KB bundle). Drawing, selection, resize, rotation and curved arrows were checked on offscreen renders. The behaviour **on a real screen is only partly checked by hand**: it can contain errors. Follow-up in `tasks/todo.md`.
+The code **compiles with zero warnings** and the app starts (12 MB of RAM after launch, 200 KB bundle). After a drawing session the RAM settled at 27 MB with the overlay closed: it does not go back to its start level, mostly heap (`MALLOC_SMALL`). This is not explained yet. Annotate 1.6.0, measured at the same moment: 38 MB after launch, 5.6 MB bundle. Drawing, selection, resize, rotation and curved arrows were checked on offscreen renders. The behaviour **on a real screen is only partly checked by hand**: it can contain errors. Follow-up in `tasks/todo.md`.
 
 `main.swift` has about 1,000 lines, above the limit of about 600. A split into several files is an open decision: without an Xcode project or a Package, SourceKit analyses each file alone and shows false errors in the editor.
 
