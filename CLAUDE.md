@@ -21,6 +21,7 @@ After each change to the project, update this file in the same change when the c
 - **No system permission.** The global shortcut uses Carbon `RegisterEventHotKey` (no Accessibility permission). Do not use `NSEvent.addGlobalMonitorForEvents`.
 - **Agent app**: `LSUIElement` + `setActivationPolicy(.accessory)`, menu bar icon only.
 - macOS 12 minimum.
+- **The bundle identifier is `com.snouzy.trace`. Do not change it:** macOS files the user's shortcuts under it, so a change resets them for every user.
 - **The interface strings are in French.** Code, comments and documentation are in English.
 
 ## Current architecture

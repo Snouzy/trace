@@ -29,7 +29,7 @@ cat > Trace.app/Contents/Info.plist <<EOF
 <plist version="1.0">
 <dict>
     <key>CFBundleExecutable</key><string>Trace</string>
-    <key>CFBundleIdentifier</key><string>local.trace</string>
+    <key>CFBundleIdentifier</key><string>com.snouzy.trace</string>
     <key>CFBundleName</key><string>Trace</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>$VERSION</string>

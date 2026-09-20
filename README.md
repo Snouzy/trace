@@ -190,7 +190,7 @@ Open **Paramètres…** from the menu bar icon. Each row has a button: click it,
 - The **global hotkey** must contain <kbd>Control</kbd> or <kbd>Command</kbd>.
 - A **tool key** is a single key. Trace refuses a key that another tool uses, and the colour and size keys.
 
-Shortcuts are stored in `UserDefaults` under the `local.trace` domain.
+Shortcuts are stored in `UserDefaults` under the `com.snouzy.trace` domain.
 
 ## 🪶 How It Stays Light
 

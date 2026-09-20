@@ -54,7 +54,7 @@
 ## Décisions ouvertes
 
 - [ ] Release `v0.1.0` : `release.sh` est prêt (build universel, signature, DMG, notarisation, `gh release create`), testé jusqu'au contrôle du certificat. Il manque, côté Mathias : le certificat « Developer ID Application » et le profil `notarytool` nommé `trace-notary`. Après la première release : ajouter « Download Release » au README
-- [ ] Identifiant du bundle : `local.trace`. À passer en nom de domaine inversé avant la première release publique ? Cela remet à zéro les raccourcis enregistrés
+- [x] Identifiant du bundle : `com.snouzy.trace` (avant : `local.trace`), changé avant la première release. Ne plus le changer ensuite
 
 - [ ] `main.swift` fait 1020 lignes pour une limite d'environ 600. Un second fichier fait apparaître de fausses erreurs SourceKit dans l'éditeur (pas de projet Xcode ni de Package). Choix : relever la limite, ou scinder et accepter les fausses erreurs
 - [ ] `CAShapeLayer` par trait au lieu de `draw(_:)` : 10 Mo au lieu de 154 Mo écrans pleins (mesure de l'agent, pas vérifiée), change l'architecture
