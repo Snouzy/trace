@@ -53,7 +53,8 @@
 
 ## Décisions ouvertes
 
-- [ ] Release `v0.1.0` : `release.sh` est prêt (build universel, signature, DMG, notarisation, `gh release create`), testé jusqu'au contrôle du certificat. Il manque, côté Mathias : le certificat « Developer ID Application » et le profil `notarytool` nommé `trace-notary`. Après la première release : ajouter « Download Release » au README
+- [x] Release `v0.1.0` publiée le 21/09/2026 : DMG universel de 194 Ko, signé Developer ID, notarisé, accepté par Gatekeeper après téléchargement. Toute la chaîne de `release.sh` a tourné, sauf sa dernière ligne, lancée à la main sur le même DMG
+- [ ] `release.sh` : la ligne `gh release create` n'a jamais tourné depuis le script lui-même. À surveiller à la prochaine version
 - [x] Identifiant du bundle : `com.snouzy.trace` (avant : `local.trace`), changé avant la première release. Ne plus le changer ensuite
 
 - [ ] `main.swift` fait 1020 lignes pour une limite d'environ 600. Un second fichier fait apparaître de fausses erreurs SourceKit dans l'éditeur (pas de projet Xcode ni de Package). Choix : relever la limite, ou scinder et accepter les fausses erreurs

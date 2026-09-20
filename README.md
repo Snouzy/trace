@@ -55,9 +55,20 @@ Annotate does more: counter, eraser, whiteboard, cursor highlight, floating tool
 
 ## 📦 Installation
 
+### Download Release
+
+1. Download `Trace-x.x.x.dmg` from the [latest release](https://github.com/Snouzy/trace/releases/latest).
+2. Open it and drag `Trace.app` into your **Applications** folder.
+3. Launch Trace from **Applications**.
+
+> [!NOTE]
+> Requires macOS 12 (Monterey) or later. Supports both Apple Silicon and Intel Macs.
+>
+> The app is signed with a Developer ID and notarized by Apple, so Gatekeeper opens it without a warning.
+
 ### Build from Source
 
-Trace has no release build yet. It compiles in about two seconds.
+Trace compiles in about two seconds.
 
 1. **Install the Command Line Tools** (Xcode is not needed):
 
@@ -81,7 +92,7 @@ Trace has no release build yet. It compiles in about two seconds.
 > [!NOTE]
 > The build targets macOS 12 (Monterey) or later, for the architecture of the Mac that builds it.
 >
-> The app is signed ad hoc by `build.sh`. It is not notarized, so build it on the Mac that runs it.
+> A build from source is signed ad hoc by `build.sh` and is not notarized, so build it on the Mac that runs it.
 
 ## 🚀 Quick Start
 

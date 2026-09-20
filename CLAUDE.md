@@ -16,6 +16,7 @@ After each change to the project, update this file in the same change when the c
 - **One source file** (`main.swift`) as long as that is reasonable (< ~600 lines).
 - **Build with `build.sh`** (`swiftc -Osize`, Swift 6 mode, macOS 12 target, local symbols stripped), which makes an ad hoc signed `Trace.app` bundle. Zero warnings.
 - **Release with `release.sh <version>`**: it calls `build.sh` for both architectures with a Developer ID signature and the hardened runtime, makes a DMG with `hdiutil`, notarizes and staples it, then publishes it with `gh release create`. It stops when the certificate or the `notarytool` profile is missing, or when `HEAD` is not `origin/main`.
+- **Released versions**: `v0.1.0` is the first one (universal, Developer ID, notarized). A released DMG is never replaced: a fix gets a new version.
 - **License**: MIT.
 - **Swift code rules**: `.claude/rules/swift.md`.
 - **No system permission.** The global shortcut uses Carbon `RegisterEventHotKey` (no Accessibility permission). Do not use `NSEvent.addGlobalMonitorForEvents`.
