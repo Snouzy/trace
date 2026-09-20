@@ -6,6 +6,10 @@ Trace is a minimal and **very light** screen annotation app for macOS, inspired 
 
 The first priority is **lightness** (RAM, CPU, binary size) and **simple code**. Each addition must be justified. When in doubt, do not add.
 
+## Keep this file current
+
+After each change to the project, update this file in the same change when the change makes a part of it false or incomplete: architecture, shortcuts, constraints, current state, out of scope. Do the same for `README.md` when the change is visible to a user. Do not touch this file when the change has no effect on what it says.
+
 ## Technical constraints (not negotiable)
 
 - **Swift + AppKit only.** No SwiftUI, no dependencies, no Swift Package, no Xcode project.
@@ -61,7 +65,7 @@ The first priority is **lightness** (RAM, CPU, binary size) and **simple code**.
 
 ## Current state
 
-The code **compiles with zero warnings** and the app starts (about 13 MB at rest, 200 KB bundle). Drawing, selection, resize, rotation and curved arrows were checked on offscreen renders. The behaviour **on a real screen is only partly checked by hand**: it can contain errors. Follow-up in `tasks/todo.md`.
+The code **compiles with zero warnings** and the app starts (12 MB of RAM after launch, 200 KB bundle). After a drawing session the RAM settled at 27 MB with the overlay closed: it does not go back to its start level, mostly heap (`MALLOC_SMALL`). This is not explained yet. Annotate 1.6.0, measured at the same moment: 38 MB after launch, 5.6 MB bundle. Drawing, selection, resize, rotation and curved arrows were checked on offscreen renders. The behaviour **on a real screen is only partly checked by hand**: it can contain errors. Follow-up in `tasks/todo.md`.
 
 `main.swift` has about 1,000 lines, above the limit of about 600. A split into several files is an open decision: without an Xcode project or a Package, SourceKit analyses each file alone and shows false errors in the editor.
 

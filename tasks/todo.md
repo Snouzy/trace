@@ -20,6 +20,8 @@
 - [x] Maj en déplaçant : un seul axe : testé hors écran
 - [x] Flèches courbes : point de courbure par segment, ajout en tirant, retrait au double-clic, queue effilée qui suit la courbe : testé hors écran
 - [x] `README.md` en anglais sur le modèle d'Annotate, `CLAUDE.md` traduit en anglais
+- [x] README : tableau comparatif avec Annotate 1.6.0, mesuré ; `CLAUDE.md` : règle « Keep this file current »
+- [x] Dépôt GitHub : description en anglais, neuf mots-clés
 - [x] Rotation de tous les éléments par la pastille ↻, Maj par pas de 15°, redimensionnement d'un élément pivoté sans saut : testé hors écran en onze étapes
 
 ## À vérifier à la main
@@ -43,11 +45,14 @@
 
 ## Mémoire
 
-- [x] Au repos : 13 Mo (lancée par `open`), inchangé
+- [x] Après lancement : 12 Mo (Annotate 1.6.0 au même instant : 38 Mo)
+- [ ] Après une session de dessin, overlay fermé : 41 Mo juste après la fermeture, 27 Mo une minute plus tard. Ne retombe pas à 12 Mo. Le gros est du tas (`MALLOC_SMALL`, 15 Mo). À expliquer : `heap Trace`, `vmmap --summary Trace`, puis `leaks Trace`
 - [ ] `footprint -p Trace` et `vmmap --summary Trace` : overlay ouvert, ouvert après des traits sur tout l'écran, refermé
 - [ ] `heap Trace | grep -E "OverlayWindow|Canvas"` et `leaks Trace` après fermeture
 
 ## Décisions ouvertes
+
+- [ ] Release avec DMG : faisable (`hdiutil`, DMG universel de 173 Ko testé). Manque un certificat « Developer ID Application » et la notarisation, sinon Gatekeeper rejette l'app téléchargée. Manque aussi une licence, le dépôt étant public
 
 - [ ] `main.swift` fait 1020 lignes pour une limite d'environ 600. Un second fichier fait apparaître de fausses erreurs SourceKit dans l'éditeur (pas de projet Xcode ni de Package). Choix : relever la limite, ou scinder et accepter les fausses erreurs
 - [ ] `CAShapeLayer` par trait au lieu de `draw(_:)` : 10 Mo au lieu de 154 Mo écrans pleins (mesure de l'agent, pas vérifiée), change l'architecture

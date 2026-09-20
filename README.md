@@ -10,13 +10,28 @@
 
 [Annotate](https://github.com/epilande/Annotate) showed how good a keyboard-driven annotation overlay can be. Trace takes the same idea and puts weight first: one Swift file, AppKit only, no dependency, no Xcode project. It is made for screen recordings, live demos and teaching, where you want to point at something and then get out of the way.
 
-|                 |                                                  |
-| --------------- | ------------------------------------------------ |
-| App bundle      | 200 KB                                           |
-| Memory at rest  | about 13 MB                                      |
-| Permissions     | none (no Accessibility, no Screen Recording)     |
-| Dependencies    | none                                             |
-| Timers at rest  | none                                             |
+|                              | Trace                           | Annotate 1.6.0                               |
+| ---------------------------- | ------------------------------- | -------------------------------------------- |
+| App bundle                   | 200 KB (424 KB as universal)    | 5.6 MB (universal)                           |
+| Memory (RAM) after launch    | 12 MB                           | 38 MB                                        |
+| CPU at rest                  | 0 %                             | 1 to 3 % while the mouse moves               |
+| Permissions                  | none                            | none                                         |
+| Dependencies                 | none                            | Sparkle, KeyboardShortcuts                   |
+| Minimum macOS                | 12                              | 14                                           |
+| Source                       | one Swift file, no Xcode project | Xcode project                               |
+
+Annotate does more: counter, eraser, whiteboard, cursor highlight, floating toolbar, sounds, redo, copy and paste, automatic updates. Trace trades those for weight.
+
+<details>
+<summary>How these numbers were measured</summary>
+
+- Apple M1 Pro, macOS 26.4, both apps measured at the same moment, right after launch, overlay never opened.
+- Memory is the RAM footprint that `footprint -p <pid>` reports. It grows with use: after a drawing session, Trace settled at 27 MB with the overlay closed.
+- CPU is a 4-second sample of `top`. Annotate keeps global mouse monitors for its cursor highlight, so it does a little work each time the mouse moves. Neither app wakes the CPU on a timer at rest.
+- Bundle size is `du -sh` on the app. Annotate ships as a universal binary with the Sparkle framework inside. `build.sh` builds Trace for the architecture of your Mac only; the universal figure comes from a build of both slices joined with `lipo`.
+- Dependencies come from Annotate's `Package.resolved`. Permissions come from its code signature (no entitlements), its `Info.plist` (no usage descriptions) and its source (mouse-only global monitors, which need no permission).
+
+</details>
 
 ## ✨ Features
 
