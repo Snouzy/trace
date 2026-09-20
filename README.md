@@ -3,7 +3,7 @@
 </div>
 
 <p align="center">
-  <strong>A tiny, keyboard-driven screen annotation tool for macOS. Draw over anything on your screen, from a 200 KB app that asks for no permission.</strong>
+  <strong>A tiny, keyboard-driven screen annotation tool for macOS. Draw over anything on your screen, from an app of about 200 KB that asks for no permission.</strong>
 </p>
 
 ## ❓ Why?
@@ -12,7 +12,7 @@
 
 |                              | Trace                           | Annotate 1.6.0                               |
 | ---------------------------- | ------------------------------- | -------------------------------------------- |
-| App bundle                   | 200 KB (424 KB as universal)    | 5.6 MB (universal)                           |
+| App bundle                   | 216 KB (440 KB as universal)    | 5.6 MB (universal)                           |
 | Memory (RAM) after launch    | 12 MB                           | 38 MB                                        |
 | CPU at rest                  | 0 %                             | 1 to 3 % while the mouse moves               |
 | Permissions                  | none                            | none                                         |
@@ -172,7 +172,7 @@ These keys work by physical position. On AZERTY, the colour keys are the top row
 
 #### Select Tool
 
-Press <kbd>V</kbd>, then click an annotation. Strokes, lines and arrows must be clicked within 8 px of the stroke. Shapes and text can be clicked anywhere inside their box.
+Press <kbd>V</kbd>, then click an annotation. The cursor changes from a crosshair to an arrow (and to an I-beam with the Text tool), so you can see which mode you are in. Strokes, lines and arrows must be clicked within 8 px of the stroke. Shapes and text can be clicked anywhere inside their box.
 
 - **Move:** drag the annotation. Hold <kbd>Shift</kbd> to stay on one axis.
 - **Resize:** drag a handle. Lines and arrows have one handle per point, shapes and freehand strokes have four corners, text has one handle that sets the font size. Hold <kbd>Shift</kbd> to keep a square or a circle.
