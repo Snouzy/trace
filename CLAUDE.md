@@ -15,10 +15,13 @@ After each change to the project, update this file in the same change when the c
 - **Swift + AppKit only.** No SwiftUI, no dependencies, no Swift Package, no Xcode project.
 - **One source file** (`main.swift`) as long as that is reasonable (< ~600 lines).
 - **Build with `build.sh`** (`swiftc -Osize`, Swift 6 mode, macOS 12 target, local symbols stripped), which makes an ad hoc signed `Trace.app` bundle. Zero warnings.
+- **Release with `release.sh <version>`**: it calls `build.sh` for both architectures with a Developer ID signature and the hardened runtime, makes a DMG with `hdiutil`, notarizes and staples it, then publishes it with `gh release create`. It stops when the certificate or the `notarytool` profile is missing, or when `HEAD` is not `origin/main`.
+- **License**: MIT.
 - **Swift code rules**: `.claude/rules/swift.md`.
 - **No system permission.** The global shortcut uses Carbon `RegisterEventHotKey` (no Accessibility permission). Do not use `NSEvent.addGlobalMonitorForEvents`.
 - **Agent app**: `LSUIElement` + `setActivationPolicy(.accessory)`, menu bar icon only.
 - macOS 12 minimum.
+- **The bundle identifier is `com.snouzy.trace`. Do not change it:** macOS files the user's shortcuts under it, so a change resets them for every user.
 - **The interface strings are in French.** Code, comments and documentation are in English.
 
 ## Current architecture
@@ -66,7 +69,7 @@ After each change to the project, update this file in the same change when the c
 
 ## Current state
 
-The code **compiles with zero warnings** and the app starts (12 MB of RAM after launch, 200 KB bundle). After a drawing session the RAM settled at 27 MB with the overlay closed: it does not go back to its start level, mostly heap (`MALLOC_SMALL`). This is not explained yet. Annotate 1.6.0, measured at the same moment: 38 MB after launch, 5.6 MB bundle. Drawing, selection, resize, rotation and curved arrows were checked on offscreen renders. The behaviour **on a real screen is only partly checked by hand**: it can contain errors. Follow-up in `tasks/todo.md`.
+The code **compiles with zero warnings** and the app starts (12 MB of RAM after launch, 216 KB bundle; the size moves in 16 KB steps). After a drawing session the RAM settled at 27 MB with the overlay closed: it does not go back to its start level, mostly heap (`MALLOC_SMALL`). This is not explained yet. Annotate 1.6.0, measured at the same moment: 38 MB after launch, 5.6 MB bundle. Drawing, selection, resize, rotation and curved arrows were checked on offscreen renders. The behaviour **on a real screen is only partly checked by hand**: it can contain errors. Follow-up in `tasks/todo.md`.
 
 `main.swift` has about 1,000 lines, above the limit of about 600. A split into several files is an open decision: without an Xcode project or a Package, SourceKit analyses each file alone and shows false errors in the editor.
 

@@ -252,7 +252,10 @@ final class Canvas: NSView, NSTextFieldDelegate {
 
     override var acceptsFirstResponder: Bool { true }
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool { true }
-    override func resetCursorRects() { addCursorRect(bounds, cursor: .crosshair) }
+    override func resetCursorRects() {
+        let cursor: NSCursor = s.tool == .select ? .arrow : s.tool == .text ? .iBeam : .crosshair
+        addCursorRect(bounds, cursor: cursor)
+    }
 
     override func draw(_ dirtyRect: NSRect) {
         let now = Date()
@@ -679,6 +682,8 @@ final class Canvas: NSView, NSTextFieldDelegate {
     private func select(_ tool: Tool) {
         deselect()
         s.tool = tool
+        // The tool is shared by all screens, so each overlay must rebuild its cursor.
+        App.shared.canvases.forEach { $0.window?.invalidateCursorRects(for: $0) }
         App.shared.flash(tool.rawValue)
     }
 

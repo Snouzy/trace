@@ -1,3 +1,5 @@
 Trace.app/
 /Trace
+/Trace-*
+*.dmg
 .DS_Store
