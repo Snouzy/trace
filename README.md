@@ -221,6 +221,10 @@ done
 
 The project brief is in [`CLAUDE.md`](CLAUDE.md) and the Swift rules are in [`.claude/rules/swift.md`](.claude/rules/swift.md).
 
+## 📄 License
+
+[MIT](LICENSE)
+
 ## 🙏 Acknowledgements
 
 - [Annotate](https://github.com/epilande/Annotate) by Emmanuel Pilande, for the idea and the keyboard-driven workflow.
