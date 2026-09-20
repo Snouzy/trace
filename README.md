@@ -221,6 +221,8 @@ done
 
 The project brief is in [`CLAUDE.md`](CLAUDE.md) and the Swift rules are in [`.claude/rules/swift.md`](.claude/rules/swift.md).
 
+`bash release.sh <version>` makes a universal, notarized DMG and publishes it as a GitHub release. It needs a Developer ID Application certificate and a `notarytool` profile; the top of the script says how to set them up.
+
 ## 📄 License
 
 [MIT](LICENSE)
