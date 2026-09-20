@@ -24,7 +24,7 @@ After each change to the project, update this file in the same change when the c
 ## Current architecture
 
 - `Settings`: global state (tool, colour, highlighter colour, width, fade mode, palette).
-- `Settings.keys`: the key of each tool and of the fade toggle, stored as characters in `UserDefaults`; refuses duplicates and reserved keys (1 to 5, [ ]).
+- `Settings.keys`: the key of each tool, of the delete-selection action and of the fade toggle, stored as characters in `UserDefaults`; refuses duplicates and reserved keys (1 to 5, [ ]).
 - `Shortcut`: the global shortcut (physical key code + Carbon modifier mask), read from and written to `UserDefaults`, with a label computed from the active keyboard layout.
 - `Mark`: one annotation (tool, colour, width, points, text, end date, angle).
 - `Canvas` (NSView): holds the `Mark` values, draws with `NSBezierPath` in `draw(_:)`, handles mouse, keyboard, text field, fade timer and shortcut feedback label.
@@ -48,7 +48,8 @@ After each change to the project, update this file in the same change when the c
 | --- | --- |
 | ⌃⌥A (global, can be changed in Settings) | Show / hide the overlay. The default is the physical position of A on QWERTY: on AZERTY it is the key labelled Q |
 | V / T / H / A / L / R / O / E (can be changed in Settings) | Select / freehand ("tracé") / highlighter / arrow / line / rectangle / circle / text |
-| Select tool: click, drag, Delete | Selects a mark, moves it, deletes it. A selected mark is not removed by the fade |
+| Select tool: click, drag | Selects a mark, moves it. A selected mark is not removed by the fade |
+| Select tool: Q (can be changed in Settings), Delete, or the trash knob next to the ↻ knob | Deletes the selected mark. Q does nothing without a selection |
 | Select tool: handles | Resize: end points (line, arrow), corners (rectangle, circle, freehand stroke), font size (text). Shift keeps a square or a circle |
 | Select tool: Shift while moving | The move stays on one axis, horizontal or vertical |
 | Select tool: arrow | One bend point at the middle of each segment: a drag curves the arrow and adds a point; a double-click on a point removes it |

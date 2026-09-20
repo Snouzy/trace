@@ -131,6 +131,7 @@ These keys work by physical position. On AZERTY, the colour keys are the top row
 | Shortcut                              | Action               | Description                                                                 |
 | ------------------------------------- | -------------------- | --------------------------------------------------------------------------- |
 | <kbd>F</kbd>                          | **Toggle Auto Fade** | Annotations fade 3 seconds after they are drawn                             |
+| <kbd>Q</kbd>                          | **Delete Selection** | Remove the selected annotation                                              |
 | <kbd>Delete</kbd>                     | **Delete**           | Remove the selected annotation, or the most recent one                      |
 | <kbd>Option</kbd> + <kbd>Delete</kbd> | **Clear All**        | Remove all annotations                                                      |
 | <kbd>Command</kbd> + <kbd>Z</kbd>     | **Undo**             | Remove the most recent annotation                                           |
@@ -179,7 +180,7 @@ Press <kbd>V</kbd>, then click an annotation. Strokes, lines and arrows must be 
 - **Rotate:** drag the ↻ knob at the bottom right. Hold <kbd>Shift</kbd> for 15° steps.
 - **Edit text:** double-click a text annotation.
 - **Restyle:** <kbd>1</kbd> to <kbd>5</kbd> and <kbd>[</kbd> <kbd>]</kbd> change the selected annotation.
-- **Delete:** press <kbd>Delete</kbd>.
+- **Delete:** press <kbd>Q</kbd> or <kbd>Delete</kbd>, or click the trash knob next to the ↻ knob.
 - Click an empty area, or change tool, to deselect.
 
 ### ⚙️ Settings

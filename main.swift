@@ -50,10 +50,11 @@ final class Settings {
     static let colorCodes = [kVK_ANSI_1, kVK_ANSI_2, kVK_ANSI_3, kVK_ANSI_4, kVK_ANSI_5]
     private static let reservedCodes = colorCodes + [kVK_ANSI_LeftBracket, kVK_ANSI_RightBracket]
 
-    // The names are the raw values of Tool. The one name that is not a tool is the fade toggle.
+    static let deleteName = "Supprimer la sélection"
+    // The names are the raw values of Tool, then the two names that are not tools: the delete key and the fade toggle.
     static let defaultKeys: KeyValuePairs = [
         "Sélection": "v", "Main levée": "t", "Surligneur": "h", "Flèche": "a", "Ligne": "l", "Rectangle": "r",
-        "Cercle": "o", "Texte": "e", "Effacement auto": "f"]
+        "Cercle": "o", "Texte": "e", deleteName: "q", "Effacement auto": "f"]
     private static let defaults = Dictionary(uniqueKeysWithValues: defaultKeys.map { ($0.key, $0.value) })
 
     private(set) var keys: [String: String] = {
@@ -311,14 +312,17 @@ final class Canvas: NSView, NSTextFieldDelegate {
             circle.fill()
             circle.stroke()
         }
+        func knob(_ at: CGPoint, _ symbol: String, _ color: NSColor) {
+            dot(at, 8)
+            NSImage(systemSymbolName: symbol, accessibilityDescription: nil)?
+                .withSymbolConfiguration(.init(paletteColors: [color]))?
+                .draw(in: NSRect(x: at.x - 5, y: at.y - 5, width: 10, height: 10))
+        }
         let all = handles(of: m)
-        let r = rotationHandle(of: m)
         all.main.forEach { dot($0, 4) }
         all.bends.forEach { dot($0, 3) }
-        dot(r, 8)
-        let icon = NSImage(systemSymbolName: "arrow.clockwise", accessibilityDescription: nil)?
-            .withSymbolConfiguration(.init(paletteColors: [.controlAccentColor]))
-        icon?.draw(in: NSRect(x: r.x - 5, y: r.y - 5, width: 10, height: 10))
+        knob(rotateKnob(of: m), "arrow.clockwise", .controlAccentColor)
+        knob(trashKnob(of: m), "trash", .systemRed)
     }
 
     private func rotating(_ m: Mark, _ draw: () -> Void) {
@@ -477,8 +481,12 @@ final class Canvas: NSView, NSTextFieldDelegate {
         if var held = selection {
             original = held
             let all = handles(of: held)
-            if (rotationHandle(of: held) - p).length <= 10 {
+            if (rotateKnob(of: held) - p).length <= 10 {
                 grab = .rotate
+                return
+            }
+            if (trashKnob(of: held) - p).length <= 10 {
+                _ = removeSelection()
                 return
             }
             if let i = all.main.firstIndex(where: { ($0 - p).length <= 8 }) {
@@ -514,13 +522,17 @@ final class Canvas: NSView, NSTextFieldDelegate {
         setNeedsDisplay(before.union(selectionRect(m)))
     }
 
-    // The rotation handle is outside the extent, 20 points from its corner.
+    // The two knobs are outside the extent, up to 20 points from its corner.
     private func selectionRect(_ m: Mark) -> NSRect { extent(of: m).insetBy(dx: -30, dy: -30) }
 
-    private func rotationHandle(of m: Mark) -> CGPoint {
+    private func knob(of m: Mark, dx: CGFloat) -> CGPoint {
         let r = localExtent(of: m)
-        return CGPoint(x: r.maxX + 14, y: r.minY - 14).pivoted(around: center(of: m), by: m.angle)
+        return CGPoint(x: r.maxX + dx, y: r.minY - 14).pivoted(around: center(of: m), by: m.angle)
     }
+
+    private func rotateKnob(of m: Mark) -> CGPoint { knob(of: m, dx: 14) }
+
+    private func trashKnob(of m: Mark) -> CGPoint { knob(of: m, dx: -8) }
 
     private func isBoxed(_ m: Mark) -> Bool {
         switch m.tool {
@@ -651,7 +663,13 @@ final class Canvas: NSView, NSTextFieldDelegate {
                 if restyle({ $0.color = s.palette[i] }) == nil { s.activeColor = s.palette[i] }
                 App.shared.flash(s.paletteNames[i])
             } else if let name = s.keys.first(where: { $0.value == k })?.key {
-                if let tool = Tool(rawValue: name) { select(tool) } else { App.shared.toggleFade() }
+                if let tool = Tool(rawValue: name) {
+                    select(tool)
+                } else if name == Settings.deleteName {
+                    _ = removeSelection()
+                } else {
+                    App.shared.toggleFade()
+                }
             } else {
                 super.keyDown(with: e)
             }

@@ -21,6 +21,7 @@
 - [x] Flèches courbes : point de courbure par segment, ajout en tirant, retrait au double-clic, queue effilée qui suit la courbe : testé hors écran
 - [x] `README.md` en anglais sur le modèle d'Annotate, `CLAUDE.md` traduit en anglais
 - [x] README : tableau comparatif avec Annotate 1.6.0, mesuré ; `CLAUDE.md` : règle « Keep this file current »
+- [x] Q (modifiable) et pastille poubelle suppriment l'élément sélectionné : testé hors écran
 - [x] Dépôt GitHub : description en anglais, neuf mots-clés
 - [x] Rotation de tous les éléments par la pastille ↻, Maj par pas de 15°, redimensionnement d'un élément pivoté sans saut : testé hors écran en onze étapes
 
