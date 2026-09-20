@@ -15,6 +15,8 @@ After each change to the project, update this file in the same change when the c
 - **Swift + AppKit only.** No SwiftUI, no dependencies, no Swift Package, no Xcode project.
 - **One source file** (`main.swift`) as long as that is reasonable (< ~600 lines).
 - **Build with `build.sh`** (`swiftc -Osize`, Swift 6 mode, macOS 12 target, local symbols stripped), which makes an ad hoc signed `Trace.app` bundle. Zero warnings.
+- **Release with `release.sh <version>`**: it calls `build.sh` for both architectures with a Developer ID signature and the hardened runtime, makes a DMG with `hdiutil`, notarizes and staples it, then publishes it with `gh release create`. It stops when the certificate or the `notarytool` profile is missing, or when `HEAD` is not `origin/main`.
+- **License**: MIT.
 - **Swift code rules**: `.claude/rules/swift.md`.
 - **No system permission.** The global shortcut uses Carbon `RegisterEventHotKey` (no Accessibility permission). Do not use `NSEvent.addGlobalMonitorForEvents`.
 - **Agent app**: `LSUIElement` + `setActivationPolicy(.accessory)`, menu bar icon only.
